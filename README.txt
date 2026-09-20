@@ -1,83 +1,82 @@
-PLAYZZONE-GOLD v3 — صفحة مدمجة 11.00 حتى 13.52
+PLAYZZONE-GOLD v3 — Combined Page 11.00 to 13.52
 ===================================================
-نسخة مدمجة من صفحتين في صفحة واحدة، بنفس الواجهة الذهبية.
+A combined single-page interface from two pages with the same golden theme.
 MERGE: GOLD (11.00-13.00) + NEW CHAIN (13.02-13.52)
 
 ===========================================================
- كيف تعمل الصفحة (Usage)
+ Usage
 ===========================================================
-1) ارفع محتويات هذا المجلد كما هي إلى أي استضافة ثابتة
-   (أو شغّله محليًا: python -m http.server 8080).
-2) افتح الجذر على متصفح PS4:  http://<IP>:8080/
-3) تظهر شاشتان للاختيار (Option Cards):
+1) Upload the contents of this folder as-is to any static web host (e.g., GitHub Pages).
+2) Open the site link on your PS4 browser.
+3) Two option cards will appear:
 
-   • الخيار ١ — [11.00 ← 13.00] : السلسلة الذهبية (GoldHEN) —
-     سلسلة poops افتراضياً، وسلسلة lapse البديلة عبر
-     index.html?bug=lapse  (كما في النسخة السابقة تماماً).
+   • Option 1 — [11.00 ← 13.00] : Golden Series (GoldHEN) —
+     defaults to the poops chain, or the alternate lapse chain via
+     index.html?bug=lapse.
 
-   • الخيار ٢ — [13.02 ← 13.52] : السلسلة الجديدة (663) —
-     تعديل 13.02 وما فوق حتى 13.52 (jb.html).
+   • Option 2 — [13.02 ← 13.52] : New Chain (663) —
+     tailored for firmware 13.02 up to 13.52 (jb.html).
 
-4) بعد اختيارك: تبدأ الصفحة بتحميل ملفات الكاش (AppCache)
-   تلقائياً مع بار ذهبي ونسبة مئوية — عند الاكتمال تُفتح
-   صفحة التفعيل مباشرة. أول زيارة أونلاين تُنزّل كل ملفات
-   السلسلتين معاً، وبعدها يعمل كل شيء أوفلاين بدون إنترنت،
-   والبايلود (GoldHEN / payload2.bin) داخل الكاش.
+4) After selection: The page automatically downloads AppCache files
+   with a golden progress bar and percentage — once completed, the exploit
+   page opens directly. The first online visit downloads both chains, and
+   afterwards, everything runs completely offline without internet, with
+   the payload (GoldHEN / payload2.bin) stored inside the cache.
 
-5) تمييز تلقائي: الصفحة تكشف إصدار الجهاز من User-Agent
-   وتعلّم البطاقة المناسبة (أقل من 13.02 ← الخيار ١،
-   13.02 فما فوق ← الخيار ٢) مع الحفاظ على حرية الاختيار.
+5) Auto-Detection: The page automatically detects your firmware version via
+   User-Agent and highlights the appropriate card while allowing you the 
+   freedom to choose manually.
 
-6) خيارات اختبار:
-   index.html?fw=13.00   تجربة واجهة بإصدار محدد دون جهاز
-   index.html?bug=lapse  فرض سلسلة LAPSE داخل الخيار ١
-   jb.html?log=1         سجل التشغيل الكامل للسلسلة الجديدة
+6) Test Options:
+   index.html?fw=13.00   Test the interface with a specific firmware without a console
+   index.html?bug=lapse  Force the LAPSE chain inside Option 1
+   jb.html?log=1         Full execution log for the new chain
 
 ===========================================================
- أسماء الملفات (Files)
+ Files
 ===========================================================
-السلسلة الذهبية — أصلية بدون أي تعديل (مطابقة للنسخة v2.1):
-  index.html (نسخة v3 الجديدة - المدمجة) / run_poops.html /
+Gold Series — Original without any modifications (matching v2.1):
+  index.html (new v3 combined version) / run_poops.html /
   run_lapse.html / chain_poops.js / chain_lapse.js / core.js /
   mem.js / int64.js / ps4_offsets.js / rpc_worker.js /
   payload.bin (GoldHEN) / patches/*.bin / ko-files/ / logo_playzone.png
 
-السلسلة الجديدة — أعيدت تسمية ملفاتها كي لا تتعارض مع أسماء
-السلسلة الذهبية (كل ملفات السلسلتين مختلفة المحتوى):
-  jb.html (واجهة ذهبية جديدة بنفس عقد jb.js) / jb.js /
+New Chain — Files renamed to avoid conflicts with the Gold series 
+(all files in both chains have different contents):
+  jb.html (new golden UI with jb.js bindings) / jb.js /
   jb_core.js / jb_mem.js / jb_int64.js / jb_offsets.js /
   jb_rpc_worker.js / payload2.bin / patches/1350.bin / patches/1352.bin
-  (13.02 و 13.04 في السلسلة الجديدة يستخدمان patches/1302.bin الموجود
-  أعلاه — لا حاجة لملف إضافي)
+  (13.02 and 13.04 in the new chain use patches/1302.bin listed
+  above — no additional file needed)
 
-  تم تعديل سطرين فقط من ملفات السلسلة الجديدة — روابط الاستيراد
-  (import) في jb.js و jb_mem.js لتشير إلى الأسماء jb_* — لا تغيير
-  في أي منطق استغلال ولا في البايلود.
+  Only two lines were modified in the new chain files — import
+  paths in jb.js and jb_mem.js to point to jb_* names — no changes
+  to any exploit logic or payloads.
 
-ملاحظة: هذه النسخة تبني فقط 13.02 حتى 13.52 في السلسلة الجديدة
-(13.02/13.04/13.50/13.52)، والسلسلة الذهبية 11.00 حتى 13.00.
-النسخة الاحتياطية الأصلية قبل التعديل: C:\temp\ps4_web_original
+Note: This version only builds for 13.02 up to 13.52 in the new chain
+(13.02/13.04/13.50/13.52), and Gold series from 11.00 up to 13.00.
+Original pre-modification backup: C:\temp\ps4_web_original
 
 ===========================================================
- الكاش الأوفلاين (AppCache) — v3
+ Offline AppCache — v3
 ===========================================================
-الملف cache.appcache بصيغة v2.1 المثبتة (بدون تعليقات # داخل
-أسطر الروابط) ويشمل الآن سلاسل الطرفين:
-  • صفحات GOLD: index / run_poops / run_lapse (مع ?ui=3 لكل منهما)
-  • ملفات GOLD: chain_*.js?ui=3 , core.js و core.js?v=10 , mem.js ,
+The cache.appcache file follows the proven v2.1 format (no # comments
+inside link lines) and now includes both sides' chains:
+  • GOLD pages: index / run_poops / run_lapse (with ?ui=3 for each)
+  • GOLD files: chain_*.js?ui=3 , core.js & core.js?v=10 , mem.js ,
     int64.js , ps4_offsets.js , rpc_worker.js , payload.bin ,
     patches/1100..1304.bin , logo_playzone.png
-  • صفحات NEW: jb.html و jb.html?log=1
-  • ملفات NEW: jb.js?v=10 , jb_core.js?jbv=10 , jb_mem.js ,
+  • NEW pages: jb.html and jb.html?log=1
+  • NEW files: jb.js?v=10 , jb_core.js?jbv=10 , jb_mem.js ,
     jb_int64.js , jb_offsets.js , jb_rpc_worker.js , payload2.bin ,
     patches/1350.bin , patches/1352.bin
-  • patches/1302.bin و 1304.bin أُضيفا (كانا ناقصين في كاش v2.1)
-NETWORK:*  و  FALLBACK:/ index.html  كما كانا.
+  • patches/1302.bin and 1304.bin added (missing in v2.1 cache)
+NETWORK:* and FALLBACK:/ index.html remain as they were.
 
-كيفية التحديث لاحقاً عند تعديل أي ملف: عدّل رقم التعليق في أول
-الملف (v3 → v4) أو غيّر رقم النسخة في الروابط (?v=10 → ?v=11)
-ليعيد كل جهاز تحميل الكاش في الزيارة الأونلاين التالية — لا
-يحتاج المستخدم لمسح الكاش يدوياً.
+How to update later when modifying any file: Change the comment version 
+at the top of the file (v3 → v4) or change the version number in the 
+links (?v=10 → ?v=11) so every console re-downloads the cache on the 
+next online visit — users do not need to clear cache manually.
 
 ===========================================================
 PLAYZZONE-GOLD v3 — with love, play_zzone
