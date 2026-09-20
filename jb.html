@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" manifest="cache.appcache">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PLAYZZONE-GOLD — 13.02–13.52</title>
+<style>
+/* ============ PLAYZZONE-GOLD v3 — new chain run page (jb.js UI contract untouched) ============ */
+:root{--gold:#e8c15a;--gold2:#f6dc86;--ink:#000;--panel:#0d0d0d;--track:#1a1a1a;--line:rgba(232,193,90,.38);--text:#f4ecd9;--muted:#a3926d;--bad:#ff6b5e;--ok:#58d68d}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--ink);color:var(--text);font:16px/1.5 system-ui,"Segoe UI",sans-serif}
+body{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
+main{width:min(470px,calc(100% - 30px));max-width:470px;margin:0 auto 26px;padding:26px 22px;text-align:center;background:var(--panel);border:1px solid var(--line);border-radius:16px}
+.brand{margin:0;font-size:25px;font-weight:800;color:var(--gold);letter-spacing:.14em}
+.sub{margin:2px 0 18px;font-size:12px;color:var(--muted);letter-spacing:.08em}
+/* bilingual activation status (jb.js only flips body.done/.fail in normal mode; log mode owns #state/#out) */
+#act{margin:0 0 4px;font-size:26px;font-weight:800;color:var(--gold2);min-height:38px;text-shadow:0 0 14px rgba(232,193,90,.35)}
+#act.ok{color:var(--ok);text-shadow:none}
+#act.bad{color:var(--bad);text-shadow:none}
+#act.warn{color:var(--gold)}
+/* activation progress bar */
+.bar{margin:14px auto 0;width:100%;height:16px;border-radius:8px;background:var(--track);border:1px solid var(--line);overflow:hidden}
+#fill{height:100%;width:100%;background:linear-gradient(180deg,var(--gold2),var(--gold));box-shadow:0 0 10px rgba(232,193,90,.45)}
+#fill.busy{background:repeating-linear-gradient(45deg,var(--gold2) 0 12px,var(--gold) 12px 24px);animation:slide 1s linear infinite}
+#fill.bad{background:linear-gradient(180deg,#ff6b5e,#e05252);box-shadow:none}
+@keyframes slide{from{background-position:0 0}to{background-position:24px 0}}
+/* #state/#out are owned by jb.js — hidden unless ?log=1 (body.log) */
+#state,#out{display:none}
+#state.ok{color:var(--ok)}#state.bad{color:var(--bad)}#state.warn{color:var(--gold2)}#state.safe{color:var(--ok)}#state.danger{color:var(--bad)}
+#fw{display:block;margin:18px 0 0;color:var(--muted);font-size:14px}
+#fw b{color:var(--gold)}
+#linklog{display:block;margin:10px 0 0;color:var(--muted);font-size:12px;text-decoration:underline}
+#social{display:block;margin:8px 0 0;color:var(--muted);font-size:14px}
+#social b{color:var(--gold);letter-spacing:.05em}
+/* ?log=1 mode — full step log, gold-styled */
+body.log #act,body.log .bar{display:none}
+body.log #state{display:block;font-size:15px;font-weight:700;color:var(--gold2);margin:0 0 10px}
+body.log #out{display:block;white-space:pre-wrap;direction:ltr;text-align:left;font:12px/1.45 Consolas,monospace;background:#050505;border:1px solid var(--line);border-radius:8px;padding:10px 12px;max-height:calc(100vh - 280px);overflow-y:auto;color:#cfd6e0}
+body.log #out .ok{color:var(--ok)}body.log #out .bad{color:var(--bad)}body.log #out .warn{color:var(--gold2)}
+footer{width:100%;padding:14px 0;color:var(--muted);font-size:12px;text-align:center}
+footer b{color:var(--gold)}
+</style>
+</head>
+<body>
+<main>
+  <h1 class="brand">PLAYZZONE-GOLD</h1>
+  <p class="sub">PS4 • NEW CHAIN • 13.02 – 13.52</p>
+  <div id="act">جارٍ التفعيل… / Activating…</div>
+  <div class="bar"><div id="fill" class="busy"></div></div>
+  <div id="state"></div>
+  <div id="out"></div>
+  <p id="fw"></p>
+  <a id="linklog" href="jb.html?log=1">السجل الكامل — Full log</a>
+  <p id="social">لمتابعة كل جديد: <b>play_zzone</b> • Follow for updates</p>
+</main>
+<footer>PLAYZZONE-GOLD V3 • 13.02 – 13.52</footer>
+<script>
+(function(){try{var m=/PlayStation\s+4[\/ ](\d+)\.(\d+)/i.exec(navigator.userAgent);if(m){var n=parseInt(m[2],16),s=n.toString(16);if(s.length<2)s="0"+s;document.getElementById("fw").innerHTML="إصدار الجهاز — Device FW: <b>"+m[1]+"."+s+"</b>";}}catch(e){}})();
+</script>
+<script>
+/* gold status mirror — normal mode: jb.js flips document.body.className to "done"/"fail" only */
+(function(){try{
+  var act=document.getElementById("act"),fill=document.getElementById("fill");
+  function render(){
+    var c=document.body.className||"";
+    if(c.indexOf("fail")>=0){act.textContent="تعذّر التفعيل — أعد التشغيل وحاول / Activation FAILED — reboot & retry";act.className="bad";fill.className="bad";}
+    else if(c.indexOf("done")>=0){act.textContent="تم التفعيل / Activated";act.className="ok";fill.className="";}
+    else if(c.indexOf("log")<0){act.textContent="جارٍ التفعيل… / Activating…";act.className="";fill.className="busy";}
+  }
+  new MutationObserver(render).observe(document.body,{attributes:true,attributeFilter:["class"]});
+  render();
+}catch(e){}})();
+</script>
+<script type="module">import "./jb.js?v=10";</script>
+</body>
+</html>

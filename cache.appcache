@@ -1,0 +1,61 @@
+CACHE MANIFEST
+# playzzone-gold offline cache v3 (2026-09-20) — MERGED: GOLD 11.00-13.00 + NEW 13.02-13.52
+#
+# v3 = two chains in one page. The GOLD chain keeps its original filenames;
+# the new chain (13.02-13.52) is stored under jb_* names so both chains can
+# coexist in the same folder and in the same AppCache.
+#
+# RULES (learned from v1/v2 bugs):
+#  1) Comments must sit on their own line and start with '#'. A '#' inside a
+#     URL line is parsed as a URL fragment which invalidates every entry below.
+#  2) AppCache matches URLs EXACTLY (query string included). So both forms of
+#     each page/module must be listed: run_*.html and run_*.html?ui=3,
+#     core.js and core.js?v=10, jb.html and jb.html?log=1, jb.js?v=10,
+#     jb_core.js?jbv=10.
+#  3) Bumping the comment forces AppCache to re-validate on the next online
+#     visit; the CACHE list itself did not need to change for that.
+#
+# GOLD chain (unchanged from v2.1, plus 1302/1304 kpatches that were missing):
+CACHE:
+index.html
+run_lapse.html
+run_poops.html
+run_lapse.html?ui=3
+run_poops.html?ui=3
+chain_lapse.js?ui=3
+chain_poops.js?ui=3
+core.js
+core.js?v=10
+mem.js
+int64.js
+ps4_offsets.js
+rpc_worker.js
+logo_playzone.png
+payload.bin
+patches/1100.bin
+patches/1150.bin
+patches/1200.bin
+patches/1250.bin
+patches/1300.bin
+patches/1302.bin
+patches/1304.bin
+
+# NEW chain 13.02-13.52 (jb_* renamed modules; jb.js fetches patches/ and
+# payload2.bin at runtime — all listed for offline use):
+jb.html
+jb.html?log=1
+jb.js?v=10
+jb_core.js?jbv=10
+jb_mem.js
+jb_int64.js
+jb_offsets.js
+jb_rpc_worker.js
+payload2.bin
+patches/1350.bin
+patches/1352.bin
+
+NETWORK:
+*
+
+FALLBACK:
+/ index.html

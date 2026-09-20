@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" manifest="cache.appcache">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PLAYZZONE-GOLD — PS4 11.00–13.52</title>
+<style>
+/* ============ PLAYZONE GOLD v3 — black & gold, featherweight, dual-chain ============ */
+:root{--gold:#e8c15a;--gold2:#f6dc86;--ink:#000;--panel:#0d0d0d;--track:#1a1a1a;--line:rgba(232,193,90,.38);--text:#f4ecd9;--muted:#a3926d;--bad:#ff6b5e;--ok:#58d68d}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--ink);color:var(--text);font:16px/1.5 system-ui,"Segoe UI",sans-serif}
+body{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
+main{width:min(470px,calc(100% - 30px));max-width:470px;margin:0 auto 26px;padding:26px 22px;text-align:center;background:var(--panel);border:1px solid var(--line);border-radius:16px}
+.brand{margin:0;font-size:26px;font-weight:800;color:var(--gold);letter-spacing:.14em}
+.sub{margin:2px 0 18px;font-size:12px;color:var(--muted);letter-spacing:.08em}
+.sec{font-size:15px;margin:0 0 14px;color:var(--muted);font-weight:600}
+/* device row */
+.fwrow{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin:2px 0 14px}
+#fwchip{font-size:30px;font-weight:800;color:var(--gold2);padding:4px 16px;border:1px solid var(--line);border-radius:12px;background:#050505;text-shadow:0 0 14px rgba(232,193,90,.35)}
+.pill{padding:4px 11px;border-radius:999px;border:1px solid var(--line);background:#050505;color:var(--gold);font-size:12px;font-weight:700;letter-spacing:.04em}
+.pill.ok{color:var(--ok);border-color:rgba(88,214,141,.45)}
+.pill.warn{color:var(--gold2)}
+/* option cards */
+#opts{display:flex;flex-direction:column;gap:12px;margin:4px 0 6px}
+.opt{display:block;width:100%;padding:15px 14px;border-radius:14px;border:1px solid var(--line);background:#050505;color:var(--text);text-align:center;cursor:pointer;font:inherit}
+.opt:hover{border-color:var(--gold)}
+.opt .o{display:block;font-size:12px;color:var(--muted);letter-spacing:.1em;margin-bottom:7px;font-weight:700}
+.opt .r{display:block;font-size:22px;font-weight:800;color:var(--gold2);letter-spacing:.03em}
+.opt .d{display:block;font-size:12.5px;color:var(--muted);margin-top:8px;line-height:1.55}
+.opt .d b{color:var(--gold)}
+.opt .tag{display:inline-block;margin-top:10px;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.05em}
+.opt.hot{border-color:var(--gold);box-shadow:0 0 18px rgba(232,193,90,.28)}
+.opt.hot .tag{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#000}
+.opt .tag.alt{border:1px solid var(--line);color:var(--muted);background:transparent}
+/* boot area (hidden until a choice) */
+#bootbox{display:none;margin-top:4px}
+.bar{margin:14px auto 0;width:100%;height:20px;border-radius:10px;background:var(--track);border:1px solid var(--line);overflow:hidden}
+#fill{height:100%;width:0%;background:linear-gradient(180deg,var(--gold2),var(--gold));box-shadow:0 0 10px rgba(232,193,90,.45);transition:width .22s linear}
+#fill.busy{width:100%;background:repeating-linear-gradient(45deg,var(--gold2) 0 12px,var(--gold) 12px 24px);animation:slide 1s linear infinite}
+@keyframes slide{from{background-position:0 0}to{background-position:24px 0}}
+#pct{font-size:20px;font-weight:800;color:var(--gold);margin:10px 0 2px}
+#pct span{color:var(--muted);font-size:13px;font-weight:400}
+#state{font-size:15px;color:var(--text);min-height:21px;margin:2px 0 0}
+#state.warn{color:var(--gold2)}#state.ok{color:var(--ok)}#state.bad{color:var(--bad)}
+#tap{display:none;margin:16px 0 0;padding:12px 20px;border-radius:12px;border:1px solid var(--gold);background:linear-gradient(180deg,var(--gold2),var(--gold));color:#000;font-size:15px;font-weight:800;text-align:center}
+footer{width:100%;padding:14px 0;color:var(--muted);font-size:12px;text-align:center}
+footer b{color:var(--gold)}
+</style>
+</head>
+<body>
+<main>
+  <h1 class="brand">PLAYZZONE-GOLD</h1>
+  <p class="sub">PS4 • 11.00 – 13.52 • اختر مسار التفعيل — pick your chain</p>
+  <h2 class="sec">إصدار الجهاز — Device Version</h2>
+  <div class="fwrow"><div id="fwchip">—</div></div>
+  <div class="fwrow" id="pills"></div>
+
+  <div id="opts">
+    <button class="opt" id="optA" type="button">
+      <span class="o">الخيار ١ — OPTION 1</span>
+      <span class="r">11.00 ← 13.00</span>
+      <span class="d">سلسلة GOLD الأصلية (GoldHEN) — poops افتراضياً، و lapse عبر <b>index.html?bug=lapse</b></span>
+      <span class="tag">اختيار السلسلة الذهبية</span>
+    </button>
+    <button class="opt" id="optB" type="button">
+      <span class="o">الخيار ٢ — OPTION 2</span>
+      <span class="r">13.02 ← 13.52</span>
+      <span class="d">السلسلة الجديدة (663) — تعديل 13.02 وما فوق حتى 13.52</span>
+      <span class="tag">اختيار السلسلة الجديدة</span>
+    </button>
+  </div>
+
+  <div id="bootbox">
+    <div class="bar"><div id="fill"></div></div>
+    <div id="pct"><span id="sub">جارٍ التجهيز… / Preparing…</span></div>
+    <div id="state"></div>
+    <div id="tap"></div>
+  </div>
+</main>
+<footer>PLAYZZONE-GOLD V3 • 11.00 – 13.52 • <b>play_zzone</b></footer>
+
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var fill = $("fill"), pct = $("pct"), sub = $("sub"), st = $("state"), fwchip = $("fwchip"), pills = $("pills"), tap = $("tap");
+  var opts = $("opts"), bootbox = $("bootbox"), optA = $("optA"), optB = $("optB");
+  var params = new URLSearchParams(location.search);
+  var GONE = false, LAUNCHED = false, RETRIED = false, WATCHDOG = null;
+  var target = "";
+
+  function setFill(p) {
+    p = Math.max(0, Math.min(100, Math.round(p)));
+    fill.classList.remove("busy"); fill.style.width = p + "%";
+    pct.innerHTML = p + "%";
+  }
+  function busy() { fill.style.width = "100%"; fill.classList.add("busy"); pct.textContent = ""; }
+  function say(t, cls) { st.textContent = t; st.className = cls || ""; }
+  function subOnly(t) { sub.textContent = t; }
+
+  /* ---------- firmware detection (same hex-minor rule as the chains) ---------- */
+  var KEY = "", FWNUM = 0, m = /PlayStation\s+4[\/ ](\d+)\.(\d+)/i.exec(navigator.userAgent);
+  if (m) {
+    var minor = parseInt(m[2], 16), ms = minor.toString(16);
+    if (ms.length < 2) ms = "0" + ms;
+    KEY = m[1] + "." + ms; FWNUM = parseInt(m[1], 10) * 100 + minor;
+  }
+  if (params.get("fw")) { KEY = params.get("fw"); FWNUM = parseInt(KEY.replace(".", ""), 10); } // ?fw=13.00 override for testing
+  fwchip.textContent = KEY ? KEY : "??";
+  var KNOWN = { "11.00": 1, "11.50": 1, "12.00": 1, "12.02": 1, "12.50": 1, "12.52": 1, "13.00": 1, "13.02": 1, "13.04": 1, "13.50": 1, "13.52": 1 };
+  var pill = document.createElement("div");
+  pill.className = "pill" + (KNOWN[KEY] ? " ok" : " warn");
+  pill.textContent = KNOWN[KEY] ? "مدعوم — SUPPORTED" : "غير مُتحقَّق — UNVERIFIED";
+  pills.appendChild(pill);
+
+  /* ---------- selector ---------- */
+  var bug = params.get("bug") === "lapse" ? "lapse" : "poops";
+  var prefer = (function () { try { return sessionStorage.getItem("pz_opt"); } catch (e) { return null; } })();
+  var recommend = FWNUM ? (FWNUM >= 1302 ? "B" : "A") : null;
+  var lastHot = null;
+
+  function markHot(key, why) {
+    if (lastHot) { lastHot.classList.remove("hot"); lastHot.querySelector(".tag").classList.add("alt"); lastHot.querySelector(".tag").textContent = lastHot._label; }
+    var el = key === "A" ? optA : optB;
+    el.classList.add("hot");
+    var tag = el.querySelector(".tag");
+    el._label = tag.textContent;
+    tag.classList.remove("alt");
+    tag.textContent = "✦ " + why;
+    lastHot = el;
+  }
+  if (prefer === "A") markHot("A", "اختيارك السابق — your last pick");
+  else if (prefer === "B") markHot("B", "اختيارك السابق — your last pick");
+  else if (recommend) markHot(recommend, "مناسب لجهازك — RECOMMENDED");
+
+  var chainPill = document.createElement("div");
+  chainPill.className = "pill";
+  chainPill.textContent = "CHAIN: " + (bug === "lapse" ? "LAPSE" : "POOPS") + " / 663";
+  pills.appendChild(chainPill);
+
+  var choose = function (key) {
+    if (GONE) return;
+    GONE = true;
+    try { sessionStorage.setItem("pz_opt", key); } catch (e) {}
+    target = key === "A"
+      ? (bug === "lapse" ? "run_lapse.html?ui=3" : "run_poops.html?ui=3")   // exact cache-manifest URLs
+      : "jb.html";
+    opts.style.display = "none";
+    bootbox.style.display = "block";
+    say("", "");
+    boot();
+  };
+  optA.addEventListener("click", function () { choose("A"); }, false);
+  optB.addEventListener("click", function () { choose("B"); }, false);
+
+  function go(why) {
+    if (LAUNCHED) return;
+    LAUNCHED = true;
+    if (WATCHDOG) clearTimeout(WATCHDOG);
+    say(why || "جارٍ التفعيل… / Activating…", "ok");
+    try { location.replace(target); } catch (e) { location.href = target; }
+  }
+
+  /* ---------- offline-cache orchestration (fast, self-healing) ---------- */
+  var ac = window.applicationCache;
+  var MEM = (function () { try { sessionStorage.setItem("__pz", "1"); sessionStorage.removeItem("__pz"); return true; } catch (e) { return false; } })();
+
+  function showTap(t) { tap.style.display = "block"; tap.textContent = t; say(t, "warn"); }
+
+  function reloadIndex() {                                // reload index itself: URL must stay exactly index.html for cache match
+    var q = location.search.replace(/[?&]r=\d+/g, "");
+    try { location.replace(location.pathname + q); } catch (e) { location.href = location.pathname + q; }
+  }
+
+  function doSwap() {                                     // cache ready -> swap + one auto reload, then manual prompt
+    try { ac.swapCache(); } catch (e) {}
+    var n = MEM ? (parseInt(sessionStorage.getItem("pz_n") || "0", 10) + 1) : 9;
+    if (MEM && n < 3) {
+      try { sessionStorage.setItem("pz_n", String(n)); } catch (e) {}
+      subOnly("تم التحديث — إعادة الفتح تلقائيًا… / Updated — reloading…");
+      say("", "");
+      setTimeout(reloadIndex, 150);
+    } else {
+      showTap("تم تحديث الكاش — انقر أو اضغط X للاستمرار • Cache updated — tap / press X");
+      tap.addEventListener("click", reloadIndex, false);
+      window.addEventListener("keydown", reloadIndex, false);
+    }
+  }
+
+  function failSafe(reason) {
+    if (LAUNCHED) return;
+    if (!RETRIED) {
+      RETRIED = true;
+      try { if (ac.status !== ac.IDLE && ac.status !== ac.UPDATEREADY) { ac.update(); subOnly("إعادة المحاولة… / Retrying…"); return; } } catch (e) {}
+    }
+    subOnly("تشغيل مباشر (تعذّر الكاش) • Running online — cache unavailable");
+    say("", "warn");
+    setTimeout(function () { go(""); }, 2600);            // never block the user
+  }
+
+  function arm() {
+    subOnly("جارٍ تحميل ملفات التشغيل بدون إنترنت… / Downloading offline files…");
+    busy(); say("", "");
+
+    ac.addEventListener("downloading", function () { subOnly("جارٍ تحميل ملفات التشغيل بدون إنترنت… / Downloading offline files…"); busy(); }, false);
+    ac.addEventListener("progress", function (e) {
+      if (e && e.total) { setFill((e.loaded / e.total) * 100); subOnly("جارٍ التحميل… / Downloading…"); }
+    }, false);
+    ac.addEventListener("cached", doSwap, false);
+    ac.addEventListener("updateready", doSwap, false);
+    ac.addEventListener("noupdate", function () { go("جاهز — جارٍ الإقلاع… / Ready — launching…"); }, false);
+    ac.addEventListener("error", function () { failSafe("error"); }, false);
+    ac.addEventListener("obsolete", function () { failSafe("obsolete"); }, false);
+
+    WATCHDOG = setTimeout(function () {                    // nothing fired in time: never hang, just go online
+      subOnly("متابعة تلقائية — تشغيل مباشر • Auto-continue — running"); say("", "warn"); go("");
+    }, 45000);
+
+    setTimeout(function () {                               // belt & braces: status may flip mid-setup
+      if (LAUNCHED) return;
+      try {
+        if (ac.status === ac.IDLE) { clearTimeout(WATCHDOG); go("جاهز — جارٍ الإقلاع… / Ready — launching…"); }
+        else if (ac.status === ac.UPDATEREADY) { clearTimeout(WATCHDOG); doSwap(); }
+      } catch (e) {}
+    }, 250);
+  }
+
+  function boot() {
+    if (navigator.onLine === false) {                      // offline: cache must already be in place, launch right away
+      subOnly("وضع الأوفلاين / OFFLINE MODE"); say("", "warn");
+      go(""); return;
+    }
+    try {
+      if (!ac || !document.documentElement.hasAttribute("manifest")) { say("", "warn"); go(""); return; }   // no cache support: direct online run
+      if (ac.status === ac.IDLE)          { go("جاهز — جارٍ الإقلاع… / Ready — launching…"); return; }      // cached already: zero delay
+      if (ac.status === ac.UPDATEREADY)   { doSwap(); return; }                                              // new manifest waiting
+      if (ac.status === ac.CHECKING || ac.status === ac.DOWNLOADING) { arm(); return; }                       // first run: show progress
+      arm();                                                                                                  // OBSOLETE/UNCACHED/other: try update
+    } catch (err) { go(""); }
+  }
+})();
+</script>
+</body>
+</html>
